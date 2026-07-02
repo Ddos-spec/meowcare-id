@@ -21,13 +21,13 @@ const FEATURES = [
   {
     icon: Stethoscope,
     title: "Triase Lokal",
-    desc: "Analisis awal gejala kucing tanpa backend",
+    desc: "Analisis awal gejala kucing dengan sync aman",
     tint: "bg-brand-50 text-brand-500",
   },
   {
     icon: BellRing,
     title: "Pengingat Tersimpan",
-    desc: "Jadwal vaksin, obat cacing, dan grooming via localStorage",
+    desc: "Jadwal vaksin, obat cacing, dan grooming tersinkron",
     tint: "bg-teal-50 text-teal-500",
   },
   {
@@ -112,7 +112,7 @@ export default function Home() {
             <p className="mt-4 max-w-md text-[15px] leading-relaxed text-ink-soft">
               MeowCare ID sudah menjadi aplikasi local-first: profil kucing,
               pengingat, triase gejala lokal, riwayat, dan kontak layanan
-              tersimpan langsung di browser tanpa backend atau secret.
+              tersimpan local-first dan tersinkron ke Postgres production.
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
@@ -171,7 +171,7 @@ export default function Home() {
             <div className="pointer-events-none absolute -inset-10 -z-10 rounded-[60px] bg-gradient-to-br from-brand-100/60 via-transparent to-teal-100/60 blur-2xl" />
             <span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-ink-soft shadow-sm">
               <Smartphone size={12} className="text-brand-500" />
-              Preview mobile pendamping
+              Preview mobile pendamping (sample UI)
             </span>
             <AppPrototype />
             <p className="mt-5 max-w-[300px] text-center text-xs text-ink-faint">
@@ -238,6 +238,7 @@ export default function Home() {
     </div>
   );
 }
+
 
 
 

@@ -111,6 +111,7 @@ export default function AppPrototype() {
           );
         })}
         <button
+          aria-label="Reset preview mobile"
           onClick={() => jump({ label: "Reset", route: "splash" })}
           className="flex cursor-pointer items-center gap-1 rounded-full border border-transparent px-2 py-1.5 text-xs font-semibold text-ink-faint hover:text-ink-soft"
         >
@@ -120,3 +121,4 @@ export default function AppPrototype() {
     </div>
   );
 }
+

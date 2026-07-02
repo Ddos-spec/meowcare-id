@@ -21,7 +21,7 @@ export default function Topbar({
 }) {
   const activeReminders = reminders.filter((reminder) => !reminder.done);
   const urgentCount = activeReminders.filter((reminder) => daysUntil(reminder.dueDate) <= 3).length;
-  const syncLabel = syncStatus === "postgres" ? "Postgres sync" : syncStatus === "loading" ? "Menyambungkan" : "Mode lokal";
+  const syncLabel = syncStatus === "postgres" ? "Postgres sync" : syncStatus === "conflict" ? "Sync conflict" : syncStatus === "loading" ? "Menyambungkan" : "Mode lokal";
 
   return (
     <div className="flex items-center justify-between gap-3 border-b border-brand-100 bg-white/70 px-4 py-4 backdrop-blur sm:px-8 sm:py-5">
@@ -72,4 +72,5 @@ export default function Topbar({
     </div>
   );
 }
+
 

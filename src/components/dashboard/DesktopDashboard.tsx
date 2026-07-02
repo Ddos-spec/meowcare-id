@@ -46,7 +46,7 @@ export default function DesktopDashboard() {
     },
     riwayat: {
       title: "Riwayat & Pengingat",
-      subtitle: `Aktivitas perawatan ${catName} tersimpan lokal`,
+      subtitle: `Aktivitas perawatan ${catName} tersinkron ke Postgres`,
     },
     profil: {
       title: "Profil Kucing",
@@ -109,6 +109,7 @@ export default function DesktopDashboard() {
     </div>
   );
 }
+
 
 
 

@@ -84,7 +84,7 @@ export default function HistorySection({
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
               <p className="text-sm font-semibold text-ink">Pengingat Aktif</p>
-              <p className="text-xs text-ink-faint">Jadwal tersimpan lokal dan bisa langsung dipakai.</p>
+              <p className="text-xs text-ink-faint">Jadwal tersimpan dan tersinkron ke Postgres.</p>
             </div>
             <span className="rounded-full bg-brand-50 px-3 py-1 text-[11px] font-semibold text-brand-600">{activeReminders.length} aktif</span>
           </div>
@@ -173,4 +173,5 @@ export default function HistorySection({
     </div>
   );
 }
+
 

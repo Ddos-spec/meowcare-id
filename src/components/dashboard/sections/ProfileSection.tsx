@@ -60,7 +60,7 @@ export default function ProfileSection({
 
         <div className="mx-auto mt-4 flex w-fit items-center gap-1.5 rounded-xl border border-brand-100 px-3.5 py-2 text-xs font-semibold text-ink-soft">
           <Pencil size={13} />
-          Profil tersimpan lokal
+          Profil tersinkron
         </div>
 
         <div className="mt-5 grid grid-cols-3 divide-x divide-brand-100 border-t border-brand-100 pt-4">
@@ -178,4 +178,5 @@ export default function ProfileSection({
     </div>
   );
 }
+
 

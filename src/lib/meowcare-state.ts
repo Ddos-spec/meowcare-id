@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { AnalysisResult, Severity } from "./cat-health";
 
 const STORAGE_KEY = "meowcare.localfirst.v1";
 const SCHEMA_VERSION = 1;
 
-export type SyncStatus = "loading" | "postgres" | "local" | "error";
+export type SyncStatus = "loading" | "postgres" | "local" | "error" | "conflict";
 
 export type CatProfile = {
   ownerName: string;
@@ -57,6 +57,7 @@ export type ServiceProvider = {
 
 export type MeowCareState = {
   version: number;
+  revision: number;
   profile: CatProfile;
   reminders: Reminder[];
   healthChecks: HealthCheckRecord[];
@@ -75,6 +76,7 @@ const newId = (prefix: string) => `${prefix}_${Date.now()}_${Math.random().toStr
 
 export const defaultState: MeowCareState = {
   version: SCHEMA_VERSION,
+  revision: 1,
   lastUpdatedAt: nowIso(),
   profile: {
     ownerName: "Heri",
@@ -165,6 +167,7 @@ export function normalizeState(value: Partial<MeowCareState> | null): MeowCareSt
     ...defaultState,
     ...value,
     version: SCHEMA_VERSION,
+    revision: typeof value?.revision === "number" ? value.revision : 1,
     profile: { ...defaultState.profile, ...(value?.profile ?? {}) },
     reminders: Array.isArray(value?.reminders) ? value.reminders : defaultState.reminders,
     healthChecks: Array.isArray(value?.healthChecks) ? value.healthChecks : defaultState.healthChecks,
@@ -218,6 +221,8 @@ async function saveRemoteState(state: MeowCareState, signal?: AbortSignal): Prom
       body: JSON.stringify({ state }),
       signal,
     });
+    if (response.status === 409) return "conflict";
+    if (response.status === 401 || response.status === 403) return "local";
     if (!response.ok) return "local";
     const payload = (await response.json()) as RemoteStateResponse;
     return payload.ok && payload.mode === "postgres" ? "postgres" : "local";
@@ -231,6 +236,7 @@ export function useMeowCareState() {
   const [state, setState] = useState<MeowCareState>(defaultState);
   const [hydrated, setHydrated] = useState(false);
   const [syncStatus, setSyncStatus] = useState<SyncStatus>("loading");
+  const lastSavedRevisionRef = useRef<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -241,13 +247,17 @@ export function useMeowCareState() {
       const nextState = remote.state ?? localState;
 
       if (cancelled) return;
+      lastSavedRevisionRef.current = nextState.revision;
       setState(nextState);
       setSyncStatus(remote.status);
       setHydrated(true);
 
       if (remote.status === "postgres" && !remote.state) {
         void saveRemoteState(localState).then((status) => {
-          if (!cancelled && status !== "loading") setSyncStatus(status);
+          if (!cancelled && status !== "loading") {
+            if (status === "postgres") lastSavedRevisionRef.current = localState.revision;
+            setSyncStatus(status);
+          }
         });
       }
     }
@@ -261,11 +271,15 @@ export function useMeowCareState() {
   useEffect(() => {
     if (!hydrated) return;
     saveMeowCareState(state);
+    if (state.revision === lastSavedRevisionRef.current) return;
 
     const controller = new AbortController();
     const timeout = window.setTimeout(() => {
       void saveRemoteState(state, controller.signal).then((status) => {
-        if (status !== "loading") setSyncStatus(status);
+        if (status !== "loading") {
+          if (status === "postgres") lastSavedRevisionRef.current = state.revision;
+          setSyncStatus(status);
+        }
       });
     }, 450);
 
@@ -281,6 +295,7 @@ export function useMeowCareState() {
         setState((current) => ({
           ...current,
           profile,
+          revision: current.revision + 1,
           lastUpdatedAt: nowIso(),
         }));
       },
@@ -296,6 +311,7 @@ export function useMeowCareState() {
             },
             ...current.reminders,
           ],
+          revision: current.revision + 1,
           lastUpdatedAt: nowIso(),
         }));
       },
@@ -305,6 +321,7 @@ export function useMeowCareState() {
           reminders: current.reminders.map((reminder) =>
             reminder.id === id ? { ...reminder, done: !reminder.done } : reminder,
           ),
+          revision: current.revision + 1,
           lastUpdatedAt: nowIso(),
         }));
       },
@@ -312,6 +329,7 @@ export function useMeowCareState() {
         setState((current) => ({
           ...current,
           reminders: current.reminders.filter((reminder) => reminder.id !== id),
+          revision: current.revision + 1,
           lastUpdatedAt: nowIso(),
         }));
       },
@@ -322,11 +340,12 @@ export function useMeowCareState() {
             { id: newId("check"), input, result, createdAt: nowIso() },
             ...current.healthChecks,
           ].slice(0, 50),
+          revision: current.revision + 1,
           lastUpdatedAt: nowIso(),
         }));
       },
       resetLocalData() {
-        setState({ ...defaultState, lastUpdatedAt: nowIso() });
+        setState((current) => ({ ...defaultState, revision: current.revision + 1, lastUpdatedAt: nowIso() }));
       },
     }),
     [],
@@ -378,3 +397,5 @@ export function severityTone(severity: Severity) {
   if (severity === "medium") return "bg-amber-50 text-amber border-amber-100";
   return "bg-mint-50 text-mint border-mint-50";
 }
+
+

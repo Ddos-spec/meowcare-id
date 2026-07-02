@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  ChevronDown,
-  SlidersHorizontal,
   Star,
   MapPin,
   Clock,
@@ -37,12 +35,10 @@ export default function ServicesSection({ services }: { services: ServiceProvide
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-1.5 rounded-xl bg-white px-3.5 py-2.5 text-[13px] font-medium text-ink-soft shadow-sm">
           <MapPin size={14} className="text-brand-500" />
-          Jakarta Selatan · provider contoh siap konfigurasi
-          <ChevronDown size={14} />
+          Area layanan: Jakarta Selatan
         </div>
-        <div className="flex items-center gap-1.5 rounded-xl bg-white px-3.5 py-2.5 text-[13px] font-medium text-ink-soft shadow-sm">
-          <SlidersHorizontal size={14} />
-          Terurut jarak terdekat
+        <div className="rounded-xl bg-white px-3.5 py-2.5 text-[13px] font-medium text-ink-soft shadow-sm">
+          Diurutkan berdasarkan jarak terdekat
         </div>
       </div>
 
@@ -90,3 +86,4 @@ export default function ServicesSection({ services }: { services: ServiceProvide
     </div>
   );
 }
+

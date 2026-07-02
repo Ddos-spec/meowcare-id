@@ -16,7 +16,7 @@ const baloo = Baloo_2({
 export const metadata: Metadata = {
   title: "MeowCare ID — Local-First MVP Perawatan Kucing",
   description:
-    "MeowCare ID adalah MVP local-first untuk profil kucing, pengingat perawatan, triase gejala lokal, riwayat health check, dan kontak layanan tanpa backend.",
+    "MeowCare ID adalah MVP local-first + Postgres sync untuk profil kucing, pengingat perawatan, triase gejala lokal, riwayat health check, dan kontak layanan.",
   manifest: "/manifest.webmanifest",
   applicationName: "MeowCare ID",
   appleWebApp: {
@@ -53,3 +53,4 @@ export default function RootLayout({
     </html>
   );
 }
+

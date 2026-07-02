@@ -40,7 +40,7 @@ export default function HomeScreen({
             Semoga Mochi sehat hari ini!
           </p>
         </div>
-        <button className="relative grid h-10 w-10 cursor-pointer place-items-center rounded-full bg-white shadow-sm">
+        <button aria-label="Lihat notifikasi sample" className="relative grid h-10 w-10 cursor-pointer place-items-center rounded-full bg-white shadow-sm">
           <Bell size={18} className="text-ink-soft" />
           <span className="absolute top-2 right-2.5 h-1.5 w-1.5 rounded-full bg-brand-500" />
         </button>
@@ -65,7 +65,7 @@ export default function HomeScreen({
             </p>
             <BadgeCheck size={15} className="text-teal-500" />
           </div>
-          <p className="text-xs text-ink-faint">2 Tahun 3 Bulan • Persia</p>
+          <p className="text-xs text-ink-faint">3 Tahun 4 Bulan • Persia</p>
           <div className="mt-1.5 flex items-center gap-4">
             <div>
               <p className="text-[10px] text-ink-faint">Berat</p>
@@ -126,7 +126,7 @@ export default function HomeScreen({
             </div>
             <div className="text-right">
               <p className="text-[11px] font-medium text-ink-faint">
-                25 Mei 2025
+                8 Jul 2026
               </p>
               <ChevronRight size={14} className="ml-auto mt-1 text-ink-faint" />
             </div>
@@ -146,7 +146,7 @@ export default function HomeScreen({
             </div>
             <div className="text-right">
               <p className="text-[11px] font-medium text-ink-faint">
-                1 Jun 2025
+                15 Jul 2026
               </p>
               <ChevronRight size={14} className="ml-auto mt-1 text-ink-faint" />
             </div>
@@ -163,3 +163,4 @@ export default function HomeScreen({
     </div>
   );
 }
+

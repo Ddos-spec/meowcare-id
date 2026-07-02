@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  ChevronDown,
-  SlidersHorizontal,
   Star,
   MapPin,
   Clock,
@@ -71,15 +69,14 @@ export default function ServicesScreen() {
             <h1 className="font-display text-[17px] font-bold text-ink">
               Layanan Terdekat
             </h1>
-            <button className="mt-0.5 flex cursor-pointer items-center gap-1 text-[12px] text-ink-soft">
+            <div className="mt-0.5 flex items-center gap-1 text-[12px] text-ink-soft">
               <MapPin size={12} className="text-brand-500" />
-              Jl. Kemang Raya, Jakarta Selatan
-              <ChevronDown size={13} />
-            </button>
+              Area layanan sample: Jakarta Selatan
+            </div>
           </div>
-          <button className="grid h-9 w-9 cursor-pointer place-items-center rounded-full bg-white shadow-sm">
-            <SlidersHorizontal size={16} className="text-ink-soft" />
-          </button>
+          <div className="rounded-full bg-white px-3 py-2 text-[11px] font-semibold text-ink-faint shadow-sm">
+            Terdekat
+          </div>
         </div>
       </div>
 
@@ -147,3 +144,4 @@ export default function ServicesScreen() {
     </div>
   );
 }
+

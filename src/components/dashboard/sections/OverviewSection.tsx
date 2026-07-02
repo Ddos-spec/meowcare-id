@@ -41,10 +41,12 @@ export default function OverviewSection({
   const latestCheck = state.healthChecks[0];
   const catName = state.profile.catName || "Kucing";
   const status = latestCheck?.result.severity === "high" ? "Butuh Vet" : latestCheck ? severityLabel(latestCheck.result.severity) : "Belum dicek";
-  const storageLabel = syncStatus === "postgres" ? "Postgres cloud sync" : "Local fallback";
+  const storageLabel = syncStatus === "postgres" ? "Postgres cloud sync" : syncStatus === "conflict" ? "Sync conflict" : "Local fallback";
   const storageCopy = syncStatus === "postgres"
     ? "Data tersimpan di browser dan tersinkron ke database Postgres meocare untuk pemakaian production single-tenant."
-    : "Data tetap tersimpan di perangkat ini; saat koneksi database tersedia, app akan sinkron otomatis ke Postgres.";
+    : syncStatus === "conflict"
+      ? "Ada versi data lebih baru di server. Muat ulang dashboard sebelum menyimpan perubahan lanjutan."
+      : "Data tetap tersimpan di perangkat ini; saat koneksi database tersedia, app akan sinkron otomatis ke Postgres.";
 
   const stats = [
     { label: "Berat Badan", value: `${state.profile.weightKg || 0} kg`, delta: state.profile.food || "Pola makan belum diisi", icon: Scale, tint: "bg-brand-50 text-brand-500" },
@@ -178,6 +180,7 @@ export default function OverviewSection({
     </div>
   );
 }
+
 
 
 

@@ -15,7 +15,7 @@ import WeightChart from "@/components/charts/WeightChart";
 type Tab = "vaksin" | "berat" | "makanan";
 
 const VACCINES = [
-  { name: "Vaksin Rabies", date: "25 Mei 2025", status: "Akan Datang" },
+  { name: "Vaksin Rabies", date: "8 Jul 2026", status: "Akan Datang" },
   { name: "Vaksin FVRCP", date: "12 Nov 2024", status: "Selesai" },
   { name: "Vaksin FeLV", date: "12 Nov 2024", status: "Selesai" },
 ];
@@ -33,6 +33,7 @@ export default function ProfileScreen({ onBack }: { onBack: () => void }) {
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2 px-5 pt-3 pb-2">
         <button
+          aria-label="Kembali ke beranda preview"
           onClick={onBack}
           className="grid h-9 w-9 cursor-pointer place-items-center rounded-full bg-white shadow-sm"
         >
@@ -41,7 +42,7 @@ export default function ProfileScreen({ onBack }: { onBack: () => void }) {
         <h1 className="flex-1 text-center font-display text-[16px] font-bold text-ink">
           Profil Kucing
         </h1>
-        <button className="grid h-9 w-9 cursor-pointer place-items-center rounded-full bg-white shadow-sm">
+        <button aria-label="Edit profil sample" className="grid h-9 w-9 cursor-pointer place-items-center rounded-full bg-white shadow-sm">
           <Pencil size={15} className="text-ink-soft" />
         </button>
       </div>
@@ -57,7 +58,7 @@ export default function ProfileScreen({ onBack }: { onBack: () => void }) {
                 className="h-full w-full object-cover"
               />
             </div>
-            <button className="absolute right-0 bottom-0 grid h-8 w-8 cursor-pointer place-items-center rounded-full bg-brand-500 shadow-md">
+            <button aria-label="Ganti foto sample" className="absolute right-0 bottom-0 grid h-8 w-8 cursor-pointer place-items-center rounded-full bg-brand-500 shadow-md">
               <Camera size={14} className="text-white" />
             </button>
           </div>
@@ -66,7 +67,7 @@ export default function ProfileScreen({ onBack }: { onBack: () => void }) {
             <BadgeCheck size={16} className="text-teal-500" />
           </div>
           <p className="text-[12.5px] text-ink-faint">
-            Persia • 2 Tahun 3 Bulan
+            Persia • 3 Tahun 4 Bulan
           </p>
         </div>
 
@@ -178,3 +179,4 @@ export default function ProfileScreen({ onBack }: { onBack: () => void }) {
     </div>
   );
 }
+
