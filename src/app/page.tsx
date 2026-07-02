@@ -12,7 +12,6 @@ import AppIcon from "@/components/brand/AppIcon";
 import Wordmark from "@/components/brand/Wordmark";
 import SleepingCat from "@/components/brand/SleepingCat";
 import { Paw } from "@/components/icons/Paw";
-import { GithubMark } from "@/components/icons/GithubMark";
 import AppPrototype from "@/components/AppPrototype";
 
 const FEATURES = [
@@ -85,13 +84,10 @@ export default function Home() {
               Demo
             </a>
             <a
-              href="https://github.com/Ddos-spec/meowcare-id"
-              target="_blank"
-              rel="noreferrer"
-              className="grid h-9 w-9 place-items-center rounded-full bg-white text-ink-soft shadow-sm transition hover:text-ink"
-              aria-label="GitHub"
+              href="#demo"
+              className="rounded-full bg-brand-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_20px_-8px_rgba(240,103,42,0.55)] transition hover:bg-brand-600"
             >
-              <GithubMark className="h-4 w-4" />
+              Coba Sekarang
             </a>
           </div>
         </div>
