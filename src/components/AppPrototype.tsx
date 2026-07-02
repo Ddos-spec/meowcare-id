@@ -15,16 +15,16 @@ import RiwayatScreen from "@/components/screens/RiwayatScreen";
 type Route = "splash" | "onboarding" | "app";
 
 const JUMP_LINKS: { label: string; route: Route; tab?: TabKey; check?: boolean }[] = [
-  { label: "Splash", route: "splash" },
-  { label: "Onboarding", route: "onboarding" },
   { label: "Beranda", route: "app", tab: "home" },
   { label: "AI Check", route: "app", tab: "home", check: true },
   { label: "Layanan", route: "app", tab: "layanan" },
   { label: "Profil", route: "app", tab: "profil" },
+  { label: "Onboarding", route: "onboarding" },
+  { label: "Splash", route: "splash" },
 ];
 
 export default function AppPrototype() {
-  const [route, setRoute] = useState<Route>("splash");
+  const [route, setRoute] = useState<Route>("app");
   const [tab, setTab] = useState<TabKey>("home");
   const [checkingSymptoms, setCheckingSymptoms] = useState(false);
 
