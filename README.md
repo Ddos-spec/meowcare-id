@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MeowCare ID — Postgres-backed Production MVP
 
-## Getting Started
+MeowCare ID adalah MVP perawatan kucing berbasis **Next.js App Router**. Dashboard sudah bisa dipakai untuk single-tenant production: profil kucing, pengingat, triase gejala lokal, riwayat, dan kontak layanan.
 
-First, run the development server:
+Data disimpan di browser sebagai fallback cepat, lalu tersinkron ke PostgreSQL saat `DATABASE_URL` aktif.
+
+## Fitur siap pakai
+
+- Landing page client-facing dengan CTA ke dashboard.
+- Dashboard `/dashboard` dengan state editable dan persistent:
+  - profil kucing: nama, pemilik, ras, umur, berat, steril, tanggal lahir, catatan, makanan;
+  - pengingat: tambah, tandai selesai, hapus;
+  - triase gejala deterministic: muntah, diare, lemas, bersin/batuk, tidak makan, gatal/kulit, mata, urin/litter box;
+  - hasil triase bisa disimpan ke riwayat;
+  - overview membaca data profil, pengingat, dan riwayat terbaru;
+  - layanan contoh dengan tombol WhatsApp (`wa.me`) tanpa secret.
+- PostgreSQL cloud sync via `/api/state`.
+- Health check database via `/api/health`.
+- UX hardening: empty states, label input, CTA valid, disclaimer medis, dan responsive dashboard.
+- PWA ringan: `public/manifest.webmanifest` dan app icon SVG.
+
+## Database production
+
+Database yang dipakai: `meocare`.
+
+Runtime membutuhkan env berikut:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+DATABASE_URL=postgres://.../meocare?sslmode=disable
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tabel yang dipakai:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `app_state` — menyimpan state dashboard single-tenant sebagai JSONB.
+- `app_events` — audit ringan event penyimpanan state.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Jika database tidak tersedia, aplikasi fallback ke browser storage agar tetap bisa dipakai.
 
-## Learn More
+## Cara run lokal
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Buka:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Landing: <http://localhost:3000>
+- Dashboard MVP: <http://localhost:3000/dashboard>
+- Health check: <http://localhost:3000/api/health>
 
-## Deploy on Vercel
+## Validasi production build
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run lint
+npm run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Stack saat ini:
+
+- Next.js 16.2.10
+- React 19.2.4
+- Tailwind CSS v4
+- TypeScript
+- PostgreSQL (`pg`)
+
+## Arsitektur
+
+- `src/lib/meowcare-state.ts`
+  - model `CatProfile`, `Reminder`, `HealthCheckRecord`, `ServiceProvider`, `MeowCareState`;
+  - `defaultState` untuk data awal yang bisa langsung dipakai;
+  - browser persistence + Postgres sync fallback-aware;
+  - hook `useMeowCareState()` untuk client-side state.
+- `src/lib/db.ts`
+  - lazy `pg` pool agar aman saat `next build`;
+  - `ensureAppTables()` untuk schema minimal.
+- `src/app/api/state/route.ts`
+  - `GET` load state dari Postgres;
+  - `PUT` upsert state ke Postgres.
+- `src/app/api/health/route.ts`
+  - cek koneksi database.
+- `src/lib/cat-health.ts`
+  - analyzer deterministic tanpa API;
+  - severity `low | medium | high`;
+  - rekomendasi awal, kapan harus ke vet, dan disclaimer bukan diagnosis dokter hewan.
+
+## Batasan saat ini
+
+- Mode production saat ini single-tenant; belum ada auth atau isolasi multi-user.
+- Provider layanan masih data contoh; nomor WhatsApp contoh harus diganti sebelum operasi nyata.
+- Triase gejala adalah rule-based lokal, bukan AI model/API dan bukan diagnosis medis.
+- Grafik berat masih visual contoh; angka berat utama sudah persistent di profil, tetapi histori berat granular belum dimodelkan.
+
+## Roadmap setelah akuisisi
+
+1. Auth + owner profile + multi-cat support.
+2. Multi-tenant schema dan row-level isolation.
+3. CRUD provider layanan, wilayah, harga, SLA, dan status operasional.
+4. Booking flow nyata, notifikasi WhatsApp/email, dan reminder scheduler.
+5. Medical content review oleh dokter hewan + audit log rekomendasi.
+6. Riwayat berat granular dan chart berbasis data aktual.
+7. PWA offline cache lebih lengkap dan export/import data lokal.

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Baloo_2 } from "next/font/google";
 import "./globals.css";
 
@@ -14,12 +14,27 @@ const baloo = Baloo_2({
 });
 
 export const metadata: Metadata = {
-  title: "MeowCare ID — Asisten Pintar untuk Kucing Kesayangan",
+  title: "MeowCare ID — Local-First MVP Perawatan Kucing",
   description:
-    "Cek gejala kucing dengan AI, pengingat vaksin & obat cacing, temukan vet/grooming/cat sitter terdekat, dan pantau profil kesehatan kucingmu — semua dalam satu aplikasi.",
-  icons: {
-    icon: "/favicon.ico",
+    "MeowCare ID adalah MVP local-first untuk profil kucing, pengingat perawatan, triase gejala lokal, riwayat health check, dan kontak layanan tanpa backend.",
+  manifest: "/manifest.webmanifest",
+  applicationName: "MeowCare ID",
+  appleWebApp: {
+    capable: true,
+    title: "MeowCare",
+    statusBarStyle: "default",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/app-icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/app-icon.svg", type: "image/svg+xml" }],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f0672a",
 };
 
 export default function RootLayout({

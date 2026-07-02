@@ -9,16 +9,19 @@ import {
   User,
   ArrowLeft,
   X,
+  CalendarClock,
 } from "lucide-react";
 import AppIcon from "@/components/brand/AppIcon";
 import Wordmark from "@/components/brand/Wordmark";
+import type { MeowCareState } from "@/lib/meowcare-state";
+import { daysUntil, formatDate } from "@/lib/meowcare-state";
 
 export type Section = "overview" | "ai-check" | "layanan" | "riwayat" | "profil";
 
 const NAV: { key: Section; label: string; icon: typeof LayoutDashboard }[] = [
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
-  { key: "ai-check", label: "AI Cat Check", icon: Stethoscope },
-  { key: "layanan", label: "Layanan Terdekat", icon: MapPinned },
+  { key: "ai-check", label: "Triase Lokal", icon: Stethoscope },
+  { key: "layanan", label: "Layanan & Kontak", icon: MapPinned },
   { key: "riwayat", label: "Riwayat", icon: History },
   { key: "profil", label: "Profil Kucing", icon: User },
 ];
@@ -28,16 +31,24 @@ export default function Sidebar({
   onChange,
   open,
   onClose,
+  state,
 }: {
   active: Section;
   onChange: (section: Section) => void;
   open: boolean;
   onClose: () => void;
+  state: MeowCareState;
 }) {
+  const nextReminder = [...state.reminders]
+    .filter((reminder) => !reminder.done)
+    .sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0];
+  const dueIn = nextReminder ? daysUntil(nextReminder.dueDate) : null;
+
   return (
     <>
       {open && (
-        <div
+        <button
+          aria-label="Tutup menu samping"
           onClick={onClose}
           className="fixed inset-0 z-40 bg-ink/40 lg:hidden"
         />
@@ -53,6 +64,7 @@ export default function Sidebar({
             <Wordmark size="text-[15px]" />
           </div>
           <button
+            aria-label="Tutup menu"
             onClick={onClose}
             className="grid h-8 w-8 cursor-pointer place-items-center rounded-full text-ink-faint hover:bg-brand-50 lg:hidden"
           >
@@ -60,7 +72,7 @@ export default function Sidebar({
           </button>
         </div>
 
-        <nav className="mt-8 flex-1 space-y-1">
+        <nav className="mt-8 flex-1 space-y-1" aria-label="Navigasi dashboard">
           {NAV.map(({ key, label, icon: Icon }) => {
             const isActive = key === active;
             return (
@@ -84,14 +96,31 @@ export default function Sidebar({
         </nav>
 
         <div className="space-y-3">
-          <div className="rounded-2xl bg-teal-50 p-3.5">
-            <p className="text-[12px] font-semibold text-teal-700">
-              Mochi butuh vaksin rabies
-            </p>
-            <p className="mt-0.5 text-[11px] text-teal-600/80">
-              Jatuh tempo 5 hari lagi
-            </p>
-          </div>
+          {nextReminder ? (
+            <button
+              onClick={() => onChange("riwayat")}
+              className="w-full rounded-2xl bg-teal-50 p-3.5 text-left transition hover:bg-teal-100/70"
+            >
+              <div className="flex items-center gap-2 text-[12px] font-semibold text-teal-700">
+                <CalendarClock size={14} />
+                {nextReminder.title}
+              </div>
+              <p className="mt-0.5 text-[11px] text-teal-600/80">
+                {dueIn === null
+                  ? formatDate(nextReminder.dueDate)
+                  : dueIn < 0
+                    ? `Terlambat ${Math.abs(dueIn)} hari`
+                    : dueIn === 0
+                      ? "Jatuh tempo hari ini"
+                      : `Jatuh tempo ${dueIn} hari lagi`}
+              </p>
+            </button>
+          ) : (
+            <div className="rounded-2xl bg-mint-50 p-3.5">
+              <p className="text-[12px] font-semibold text-mint">Semua pengingat beres</p>
+              <p className="mt-0.5 text-[11px] text-ink-faint">Tambahkan jadwal baru di Riwayat.</p>
+            </div>
+          )}
           <Link
             href="/"
             className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-ink-faint transition hover:text-ink-soft"
@@ -104,3 +133,4 @@ export default function Sidebar({
     </>
   );
 }
+

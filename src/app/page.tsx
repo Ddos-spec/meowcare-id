@@ -20,26 +20,26 @@ import AppPrototype from "@/components/AppPrototype";
 const FEATURES = [
   {
     icon: Stethoscope,
-    title: "AI Cat Check",
-    desc: "Analisis gejala kucing dengan AI",
+    title: "Triase Lokal",
+    desc: "Analisis awal gejala kucing tanpa backend",
     tint: "bg-brand-50 text-brand-500",
   },
   {
     icon: BellRing,
-    title: "Pengingat Pintar",
-    desc: "Jadwal vaksin, obat cacing, dan perawatan lainnya",
+    title: "Pengingat Tersimpan",
+    desc: "Jadwal vaksin, obat cacing, dan grooming via localStorage",
     tint: "bg-teal-50 text-teal-500",
   },
   {
     icon: MapPinned,
-    title: "Layanan Terdekat",
-    desc: "Temukan vet, grooming, dan cat sitter terdekat",
+    title: "Layanan & Kontak",
+    desc: "Daftar provider contoh dengan CTA WhatsApp",
     tint: "bg-amber-50 text-amber-500",
   },
   {
     icon: LineChart,
     title: "Cat Profile & Riwayat",
-    desc: "Pantau kesehatan & tumbuh kembang kucingmu",
+    desc: "Profil editable, riwayat check, dan catatan perawatan",
     tint: "bg-mint-50 text-mint",
   },
 ];
@@ -48,17 +48,17 @@ const STEPS = [
   {
     icon: MessageCircleHeart,
     title: "Ceritakan gejala",
-    desc: "Ketik atau ucapkan keluhan kucingmu, atau pilih dari gejala populer.",
+    desc: "Ketik keluhan kucingmu, atau pilih chip gejala populer.",
   },
   {
     icon: ScanSearch,
-    title: "AI menganalisis",
-    desc: "Model AI membaca pola gejala dan menyusun kemungkinan kondisi.",
+    title: "Triase lokal berjalan",
+    desc: "Rule deterministic membaca pola muntah, diare, lemas, urin, mata, dan gejala umum lain.",
   },
   {
     icon: Sparkles,
-    title: "Dapat rekomendasi",
-    desc: "Terima saran perawatan, atau langsung booking ke vet terdekat.",
+    title: "Simpan tindakan",
+    desc: "Simpan hasil ke riwayat, tambah pengingat, atau kontak vet melalui WhatsApp.",
   },
 ];
 
@@ -84,14 +84,14 @@ export default function Home() {
               href="/dashboard"
               className="hidden text-sm font-medium text-ink-soft hover:text-ink sm:block"
             >
-              Demo
+              Dashboard
             </Link>
             <Link
               href="/dashboard"
               className="flex items-center gap-1.5 rounded-full bg-brand-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_20px_-8px_rgba(240,103,42,0.55)] transition hover:bg-brand-600"
             >
               <LayoutDashboard size={15} />
-              Buka Dashboard
+              Pakai Dashboard
             </Link>
           </div>
         </div>
@@ -103,16 +103,16 @@ export default function Home() {
             <Paw className="absolute -top-6 -left-2 h-8 w-8 rotate-[-16deg] text-brand-200" />
             <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-600">
               <Sparkles size={12} />
-              Ditenagai AI
+              MVP local-first siap dipakai
             </span>
             <h1 className="mt-4 font-display text-4xl leading-[1.1] font-bold text-ink sm:text-5xl">
-              Asisten Pintar untuk{" "}
+              MeowCare local-first untuk{" "}
               <span className="text-brand-500">Kucing Kesayangan</span>
             </h1>
             <p className="mt-4 max-w-md text-[15px] leading-relaxed text-ink-soft">
-              MeowCare ID membantumu memantau gejala, jadwal vaksin, dan
-              perawatan Mochi &mdash; sampai menemukan layanan terdekat, semua
-              dalam satu aplikasi.
+              MeowCare ID sudah menjadi aplikasi local-first: profil kucing,
+              pengingat, triase gejala lokal, riwayat, dan kontak layanan
+              tersimpan langsung di browser tanpa backend atau secret.
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
@@ -120,15 +120,15 @@ export default function Home() {
                 href="/dashboard"
                 className="flex items-center gap-2 rounded-2xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_28px_-10px_rgba(240,103,42,0.55)] transition hover:bg-brand-600"
               >
-                Buka Dashboard
+                Pakai Dashboard
                 <ArrowRight size={16} />
               </Link>
               <a
-                href="#demo"
+                href="#mobile-preview"
                 className="flex items-center gap-2 rounded-2xl border border-brand-200 bg-white px-5 py-3 text-sm font-semibold text-ink-soft transition hover:border-brand-300 hover:text-ink"
               >
                 <Smartphone size={16} />
-                Lihat Versi Mobile
+                Lihat Preview Mobile
               </a>
             </div>
 
@@ -165,25 +165,25 @@ export default function Home() {
           </div>
 
           <div
-            id="demo"
+            id="mobile-preview"
             className="relative flex flex-col items-center justify-self-center scroll-mt-24"
           >
             <div className="pointer-events-none absolute -inset-10 -z-10 rounded-[60px] bg-gradient-to-br from-brand-100/60 via-transparent to-teal-100/60 blur-2xl" />
             <span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-ink-soft shadow-sm">
               <Smartphone size={12} className="text-brand-500" />
-              Preview Aplikasi Mobile
+              Preview mobile pendamping
             </span>
             <AppPrototype />
             <p className="mt-5 max-w-[300px] text-center text-xs text-ink-faint">
-              Prototipe interaktif &mdash; klik tombol di dalam layar atau
-              gunakan pintasan navigasi di atas untuk berpindah layar.
+              Preview mobile tetap tersedia, sedangkan dashboard adalah MVP
+              local-first yang bisa dipakai untuk operasional ringan besok.
             </p>
             <Link
               href="/dashboard"
               className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-teal-600 hover:text-teal-700"
             >
               <LayoutDashboard size={13} />
-              Lihat versi Dashboard (PC) →
+              Mulai Pakai MVP →
             </Link>
           </div>
         </section>
@@ -195,7 +195,7 @@ export default function Home() {
                 Cara Kerja
               </span>
               <h2 className="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">
-                AI Cat Check dalam 3 langkah
+                Triase lokal dalam 3 langkah
               </h2>
             </div>
             <div className="mt-10 grid gap-6 sm:grid-cols-3">
@@ -230,11 +230,14 @@ export default function Home() {
             <Wordmark size="text-sm" />
           </div>
           <p className="text-xs text-ink-faint">
-            Desain produk &amp; prototipe front-end &mdash; dibangun dengan
-            Next.js &amp; Tailwind CSS.
+            Local-first production MVP &mdash; dibangun dengan Next.js, React,
+            dan Tailwind CSS.
           </p>
         </div>
       </footer>
     </div>
   );
 }
+
+
+
