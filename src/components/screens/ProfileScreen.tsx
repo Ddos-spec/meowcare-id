@@ -10,6 +10,7 @@ import {
   Syringe,
   UtensilsCrossed,
 } from "lucide-react";
+import WeightChart from "@/components/charts/WeightChart";
 
 type Tab = "vaksin" | "berat" | "makanan";
 
@@ -19,67 +20,11 @@ const VACCINES = [
   { name: "Vaksin FeLV", date: "12 Nov 2024", status: "Selesai" },
 ];
 
-const WEIGHTS = [
-  { m: "Des", v: 3.2 },
-  { m: "Jan", v: 3.5 },
-  { m: "Feb", v: 3.8 },
-  { m: "Mar", v: 4.0 },
-  { m: "Apr", v: 4.1 },
-  { m: "Mei", v: 4.2 },
-];
-
 const MEALS = [
   { time: "07.00", name: "Royal Canin Persian Adult", portion: "40 gr" },
   { time: "13.00", name: "Wet Food Tuna", portion: "1 sachet" },
   { time: "19.00", name: "Royal Canin Persian Adult", portion: "40 gr" },
 ];
-
-function WeightChart() {
-  const w = 300;
-  const h = 130;
-  const max = 5;
-  const min = 1;
-  const step = w / (WEIGHTS.length - 1);
-  const points = WEIGHTS.map((d, i) => {
-    const x = i * step;
-    const y = h - ((d.v - min) / (max - min)) * h;
-    return { x, y, ...d };
-  });
-  const linePath = points
-    .map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`)
-    .join(" ");
-  const areaPath = `${linePath} L${w},${h} L0,${h} Z`;
-
-  return (
-    <div>
-      <svg viewBox={`0 0 ${w} ${h + 22}`} className="w-full">
-        <defs>
-          <linearGradient id="weightFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#F0672A" stopOpacity="0.28" />
-            <stop offset="100%" stopColor="#F0672A" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <path d={areaPath} fill="url(#weightFill)" />
-        <path d={linePath} fill="none" stroke="#F0672A" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
-        {points.map((p) => (
-          <circle key={p.m} cx={p.x} cy={p.y} r="3.5" fill="#ffffff" stroke="#F0672A" strokeWidth="2.5" />
-        ))}
-        {points.map((p) => (
-          <text
-            key={`${p.m}-label`}
-            x={p.x}
-            y={h + 16}
-            textAnchor="middle"
-            fontSize="9"
-            fill="#a99c8e"
-          >
-            {p.m}
-          </text>
-        ))}
-      </svg>
-    </div>
-  );
-}
 
 export default function ProfileScreen({ onBack }: { onBack: () => void }) {
   const [tab, setTab] = useState<Tab>("vaksin");

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Stethoscope,
   BellRing,
@@ -7,6 +8,8 @@ import {
   MessageCircleHeart,
   ScanSearch,
   Sparkles,
+  LayoutDashboard,
+  Smartphone,
 } from "lucide-react";
 import AppIcon from "@/components/brand/AppIcon";
 import Wordmark from "@/components/brand/Wordmark";
@@ -77,18 +80,19 @@ export default function Home() {
             >
               Fitur
             </a>
-            <a
-              href="#demo"
+            <Link
+              href="/dashboard"
               className="hidden text-sm font-medium text-ink-soft hover:text-ink sm:block"
             >
               Demo
-            </a>
-            <a
-              href="#demo"
-              className="rounded-full bg-brand-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_20px_-8px_rgba(240,103,42,0.55)] transition hover:bg-brand-600"
+            </Link>
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-1.5 rounded-full bg-brand-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_20px_-8px_rgba(240,103,42,0.55)] transition hover:bg-brand-600"
             >
-              Coba Sekarang
-            </a>
+              <LayoutDashboard size={15} />
+              Buka Dashboard
+            </Link>
           </div>
         </div>
       </header>
@@ -112,18 +116,19 @@ export default function Home() {
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <a
-                href="#demo"
+              <Link
+                href="/dashboard"
                 className="flex items-center gap-2 rounded-2xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_28px_-10px_rgba(240,103,42,0.55)] transition hover:bg-brand-600"
               >
-                Coba Prototipe
+                Buka Dashboard
                 <ArrowRight size={16} />
-              </a>
+              </Link>
               <a
-                href="#fitur"
-                className="rounded-2xl border border-brand-200 bg-white px-5 py-3 text-sm font-semibold text-ink-soft transition hover:border-brand-300 hover:text-ink"
+                href="#demo"
+                className="flex items-center gap-2 rounded-2xl border border-brand-200 bg-white px-5 py-3 text-sm font-semibold text-ink-soft transition hover:border-brand-300 hover:text-ink"
               >
-                Lihat Fitur
+                <Smartphone size={16} />
+                Lihat Versi Mobile
               </a>
             </div>
 
@@ -164,11 +169,22 @@ export default function Home() {
             className="relative flex flex-col items-center justify-self-center scroll-mt-24"
           >
             <div className="pointer-events-none absolute -inset-10 -z-10 rounded-[60px] bg-gradient-to-br from-brand-100/60 via-transparent to-teal-100/60 blur-2xl" />
+            <span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-ink-soft shadow-sm">
+              <Smartphone size={12} className="text-brand-500" />
+              Preview Aplikasi Mobile
+            </span>
             <AppPrototype />
             <p className="mt-5 max-w-[300px] text-center text-xs text-ink-faint">
               Prototipe interaktif &mdash; klik tombol di dalam layar atau
               gunakan pintasan navigasi di atas untuk berpindah layar.
             </p>
+            <Link
+              href="/dashboard"
+              className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-teal-600 hover:text-teal-700"
+            >
+              <LayoutDashboard size={13} />
+              Lihat versi Dashboard (PC) →
+            </Link>
           </div>
         </section>
 
