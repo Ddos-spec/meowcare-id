@@ -19,14 +19,24 @@ const HEADERS: Record<Section, { title: string; subtitle: string }> = {
 
 export default function DesktopDashboard() {
   const [section, setSection] = useState<Section>("overview");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { title, subtitle } = HEADERS[section];
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-cream">
-      <Sidebar active={section} onChange={setSection} />
+      <Sidebar
+        active={section}
+        onChange={setSection}
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Topbar title={title} subtitle={subtitle} />
-        <div className="flex-1 overflow-y-auto p-8">
+        <Topbar
+          title={title}
+          subtitle={subtitle}
+          onMenuClick={() => setSidebarOpen(true)}
+        />
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
           {section === "overview" && <OverviewSection onNavigate={setSection} />}
           {section === "ai-check" && <AiCheckSection onNavigate={setSection} />}
           {section === "layanan" && <ServicesSection />}
