@@ -81,17 +81,17 @@ export default function Home() {
               Fitur
             </a>
             <Link
-              href="/dashboard"
+              href="/login"
               className="hidden text-sm font-medium text-ink-soft hover:text-ink sm:block"
             >
-              Dashboard
+              Masuk
             </Link>
             <Link
-              href="/dashboard"
+              href="/signup"
               className="flex items-center gap-1.5 rounded-full bg-brand-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_20px_-8px_rgba(240,103,42,0.55)] transition hover:bg-brand-600"
             >
               <LayoutDashboard size={15} />
-              Pakai Dashboard
+              Daftar Gratis
             </Link>
           </div>
         </div>
@@ -117,10 +117,10 @@ export default function Home() {
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
               <Link
-                href="/dashboard"
+                href="/signup"
                 className="flex items-center gap-2 rounded-2xl bg-brand-500 px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_28px_-10px_rgba(240,103,42,0.55)] transition hover:bg-brand-600"
               >
-                Pakai Dashboard
+                Daftar Gratis
                 <ArrowRight size={16} />
               </Link>
               <a
@@ -179,11 +179,11 @@ export default function Home() {
               local-first yang bisa dipakai untuk operasional ringan besok.
             </p>
             <Link
-              href="/dashboard"
+              href="/login"
               className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-teal-600 hover:text-teal-700"
             >
               <LayoutDashboard size={13} />
-              Mulai Pakai MVP →
+              Masuk & Mulai →
             </Link>
           </div>
         </section>

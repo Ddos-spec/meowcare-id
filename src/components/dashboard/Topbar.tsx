@@ -1,6 +1,7 @@
 "use client";
 
-import { Bell, Menu, CalendarClock } from "lucide-react";
+import { Bell, Menu, CalendarClock, LogOut } from "lucide-react";
+import { logoutAction } from "@/app/dashboard/actions";
 import type { CatProfile, Reminder, SyncStatus } from "@/lib/meowcare-state";
 import { daysUntil } from "@/lib/meowcare-state";
 
@@ -68,6 +69,15 @@ export default function Topbar({
             <p className="text-[10.5px] text-ink-faint">Pemilik {profile.catName || "kucing"}</p>
           </div>
         </div>
+        <form action={logoutAction}>
+          <button
+            type="submit"
+            title="Keluar"
+            className="grid h-9 w-9 shrink-0 cursor-pointer place-items-center rounded-full bg-cream text-ink-faint transition hover:bg-red-50 hover:text-red-500 sm:h-10 sm:w-10"
+          >
+            <LogOut size={16} />
+          </button>
+        </form>
       </div>
     </div>
   );

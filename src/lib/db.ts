@@ -44,4 +44,33 @@ export async function ensureAppTables() {
     );
   `);
   await db.query(`CREATE INDEX IF NOT EXISTS app_events_created_at_idx ON app_events (created_at DESC);`);
+
+  // Auth tables
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS users (
+      id text PRIMARY KEY,
+      email text UNIQUE NOT NULL,
+      name text NOT NULL,
+      password_hash text NOT NULL,
+      role text NOT NULL DEFAULT 'user',
+      created_at timestamptz NOT NULL DEFAULT now()
+    );
+  `);
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS sessions (
+      id text PRIMARY KEY,
+      user_id text NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      expires_at timestamptz NOT NULL,
+      created_at timestamptz NOT NULL DEFAULT now()
+    );
+  `);
+  await db.query(`CREATE INDEX IF NOT EXISTS sessions_user_id_idx ON sessions (user_id);`);
+  await db.query(`CREATE INDEX IF NOT EXISTS sessions_expires_at_idx ON sessions (expires_at);`);
+
+  // Multi-tenant: add user_id to app_state
+  try {
+    await db.query(`ALTER TABLE app_state ADD COLUMN IF NOT EXISTS user_id text REFERENCES users(id);`);
+  } catch {
+    // Column may already exist
+  }
 }

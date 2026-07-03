@@ -10,6 +10,7 @@ import {
   ArrowLeft,
   X,
   CalendarClock,
+  Shield,
 } from "lucide-react";
 import AppIcon from "@/components/brand/AppIcon";
 import Wordmark from "@/components/brand/Wordmark";
@@ -107,6 +108,13 @@ function SidebarContent({ active, onChange, onClose, state, mobile = false }: Si
             <p className="mt-0.5 text-[11px] text-ink-faint">Tambahkan jadwal baru di Riwayat.</p>
           </div>
         )}
+        <Link
+          href="/admin"
+          className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-ink-faint transition hover:text-ink-soft"
+        >
+          <Shield size={14} />
+          Admin Panel
+        </Link>
         <Link
           href="/"
           className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-ink-faint transition hover:text-ink-soft"
