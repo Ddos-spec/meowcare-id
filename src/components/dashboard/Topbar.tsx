@@ -62,7 +62,7 @@ export default function Topbar({
         <div className="hidden items-center gap-2.5 rounded-xl bg-cream py-1.5 pr-3.5 pl-1.5 sm:flex">
           <div className="h-8 w-8 overflow-hidden rounded-lg bg-brand-100">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/mochi.svg" alt={profile.catName} className="h-full w-full object-cover" />
+            <img src={profile.avatar || "/mochi.svg"} alt={profile.catName} className="h-full w-full object-cover" />
           </div>
           <div className="leading-tight">
             <p className="text-xs font-semibold text-ink">{profile.ownerName || "Owner"}</p>

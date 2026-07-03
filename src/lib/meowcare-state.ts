@@ -20,6 +20,7 @@ export type CatProfile = {
   notes: string;
   food: string;
   feedingNotes: string;
+  avatar?: string;
 };
 
 export type ReminderCategory = "vaksin" | "obat" | "grooming" | "checkup" | "makanan";
@@ -90,6 +91,7 @@ export const defaultState: MeowCareState = {
     notes: "Sensitif pada perubahan makanan. Pantau pencernaan saat ganti pakan.",
     food: "Royal Canin Persian Adult + wet food tuna",
     feedingNotes: "Pagi 40 gr, siang 1 sachet wet food, malam 40 gr.",
+    avatar: "",
   },
   reminders: [
     {

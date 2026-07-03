@@ -38,6 +38,20 @@ export default function ProfileSection({
     setSaved(true);
   }
 
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      const updatedProfile = { ...draft, avatar: base64String };
+      setDraft(updatedProfile);
+      onUpdateProfile(updatedProfile);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const vaccineReminders = reminders.filter((reminder) => reminder.category === "vaksin" || reminder.category === "checkup");
 
   return (
@@ -46,11 +60,12 @@ export default function ProfileSection({
         <div className="relative mx-auto w-fit">
           <div className="h-28 w-28 overflow-hidden rounded-full border-4 border-white bg-brand-100 shadow-md">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/mochi.svg" alt={profile.catName} className="h-full w-full object-cover" />
+            <img src={draft.avatar || "/mochi.svg"} alt={profile.catName} className="h-full w-full object-cover" />
           </div>
-          <div className="absolute right-0 bottom-0 grid h-9 w-9 place-items-center rounded-full bg-brand-500 shadow-md" title="Avatar default">
+          <label className="absolute right-0 bottom-0 grid h-9 w-9 cursor-pointer place-items-center rounded-full bg-brand-500 shadow-md transition hover:bg-brand-600" title="Ganti foto kucing">
             <Camera size={15} className="text-white" />
-          </div>
+            <input type="file" accept="image/*" onChange={handleAvatarChange} className="hidden" />
+          </label>
         </div>
         <div className="mt-4 flex items-center justify-center gap-1">
           <p className="font-display text-lg font-bold text-ink">{profile.catName}</p>
