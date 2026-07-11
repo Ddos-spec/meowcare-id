@@ -24,12 +24,6 @@ export const metadata: Metadata = {
     title: "MeowCare",
     statusBarStyle: "default",
   },
-  icons: {
-    icon: [
-      { url: "/app-icon.svg", type: "image/svg+xml" },
-    ],
-    apple: [{ url: "/app-icon.svg", type: "image/svg+xml" }],
-  },
 };
 
 export const viewport: Viewport = {
