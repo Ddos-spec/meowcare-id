@@ -69,10 +69,10 @@ export default function Home() {
 
       <header className="sticky top-0 z-30 border-b border-brand-100/70 bg-cream/85 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
-          <div className="flex items-center gap-2.5">
+          <Link href="/" className="flex items-center gap-2.5 hover:opacity-90 transition">
             <AppIcon size={36} rounded="rounded-xl" />
             <Wordmark size="text-[17px]" />
-          </div>
+          </Link>
           <div className="flex items-center gap-3">
             <a
               href="#fitur"
@@ -225,10 +225,10 @@ export default function Home() {
 
       <footer className="border-t border-brand-100/70">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-6 py-8 text-center sm:flex-row sm:justify-between sm:text-left">
-          <div className="flex items-center gap-2.5">
+          <Link href="/" className="flex items-center gap-2.5 hover:opacity-90 transition">
             <AppIcon size={28} rounded="rounded-lg" />
             <Wordmark size="text-sm" />
-          </div>
+          </Link>
           <p className="text-xs text-ink-faint">
             Local-first production MVP &mdash; dibangun dengan Next.js, React,
             dan Tailwind CSS.
